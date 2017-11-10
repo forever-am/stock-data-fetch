@@ -1,6 +1,7 @@
 from os import path, mkdir
 from datetime import datetime
 import pandas_datareader.data as web
+from live_data_api import fetch_live_quote
 
 HOME_DIR = path.expanduser("~")
 
@@ -18,9 +19,12 @@ class DataReader(object):
         mkdir_if_not_exist(self.cache_dir)
 
     def read(self, ticker, source="yahoo", end=None):
-        end = end or datetime.now().date()
         filename = path.join(self.cache_dir, ticker + ".csv")
+        quote = fetch_live_quote(ticker) if end is None else None
+        end = end or datetime.now().date()
         df = web.DataReader(ticker, source, start=self.start, end=end)
+        if quote is not None:
+            df.ix[end]["Adj Close"] = quote
         df.to_csv(filename, header=True)
         return df
 
