@@ -50,6 +50,8 @@ def test_mkdir_if_not_exist(m_mkdir):
 
 
 class DataReaderTest(TestCase):
+    GoogleTicker = "GOOG"
+    YahooSource = "yahoo"
     stock_data_dir = path.join(TEST_DIR, "stock-data")
 
     def setUp(self):
@@ -83,11 +85,11 @@ class DataReaderTest(TestCase):
         Test if the web-retrieved data are correct
         :return:
         """
-        ticker = "GOOG"
+        ticker = self.GoogleTicker
         end = "2017-11-02"
         df = api.data_reader(ticker, end=end, enable_cache=False)
         self.m_web_reader.assert_called_with(
-            ticker, "yahoo", start="1926-01-01", end=end
+            ticker, self.YahooSource, start="1926-01-01", end=end
         )
         expected = web_reader(ticker)[:end]
         pdt.assert_frame_equal(df, expected)
@@ -98,7 +100,7 @@ class DataReaderTest(TestCase):
         Test if the dataframe is successfully updated with the live quote
         :return:
         """
-        ticker = "GOOG"
+        ticker = self.GoogleTicker
         df = api.data_reader(ticker, end=None, enable_cache=False)
         end = today()
         collumns = ["Open", "High", "Low", "Close", "Volume"]
@@ -112,7 +114,7 @@ class DataReaderTest(TestCase):
         Test if the cached file is created and if the data inside are valid
         :return:
         """
-        ticker = "GOOG"
+        ticker = self.GoogleTicker
         end_caching = "2017-09-02"
         df_caching = api.data_reader(ticker, end=end_caching)
         cached_filename = path.join(self.stock_data_dir, 'GOOG.yahoo.csv')
@@ -126,16 +128,16 @@ class DataReaderTest(TestCase):
         works.
         :return:
         """
-        ticker = "GOOG"
+        ticker = self.GoogleTicker
         end_caching = "2017-09-02"
         df_caching = api.data_reader(ticker, end=end_caching)
         self.m_web_reader.assert_called_with(
-            ticker, "yahoo", start="1926-01-01", end=end_caching
+            ticker, self.YahooSource, start="1926-01-01", end=end_caching
         )
         end = "2017-11-02"
         df = api.data_reader(ticker, end=end)
         self.m_web_reader.assert_called_with(
-            ticker, "yahoo", start="2017-09-02", end=end
+            ticker, self.YahooSource, start="2017-09-02", end=end
         )
         expected = web_reader(ticker)[:end]
         pdt.assert_frame_equal(df_caching, expected[:end_caching])
@@ -165,5 +167,5 @@ class LiveDataAPITest(TestCase):
         Test if the dataframe contains realtime price in "Adj close" for the
         current day when end=None
         """
-        ticker = "GOOG"
-        pdt.assert_almost_equal(1031.26, live_data_api.fetch_live_quote(ticker))
+        ticker = self.GoogleTicker
+        self.assertEqual(1031.26, live_data_api.fetch_live_quote(ticker))
