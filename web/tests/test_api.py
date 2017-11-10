@@ -17,7 +17,9 @@ def _read_data_frame_csv(filename):
 
 def web_reader(ticker, *args, **kwargs):
     filename = path.join(TEST_DIR, "mock-stock-data", ticker + ".csv")
-    return _read_data_frame_csv(filename)
+    start = kwargs["start"] if "start" in kwargs else None
+    end = kwargs["end"] if "end" in kwargs else None
+    return _read_data_frame_csv(filename).ix[start:end]
 
 def _read_quote(filename):
     """
@@ -38,7 +40,7 @@ def fetch_quote_data(ticker):
     return _read_quote(filename)
 
 def today():
-    return '2017-11-2'#datetime(2017, 2, 11, 0, 0)
+    return '2017-11-2'
 
 @mock.patch(api.__name__ + ".mkdir")
 def test_mkdir_if_not_exist(m_mkdir):
@@ -77,6 +79,10 @@ class DataReaderTest(TestCase):
         self.assertEqual(self.reader.cache_dir, self.stock_data_dir)
 
     def test_data_reader(self):
+        """
+        Test if the web-retrieved data are correct
+        :return:
+        """
         ticker = "GOOG"
         end = "2017-11-02"
         df = api.data_reader(ticker, end=end, enable_cache=False)
@@ -88,6 +94,10 @@ class DataReaderTest(TestCase):
         rmtree(self.stock_data_dir)
 
     def test_data_reader_with_live_quote(self):
+        """
+        Test if the dataframe is successfully updated with the live quote
+        :return:
+        """
         ticker = "GOOG"
         df = api.data_reader(ticker, end=None, enable_cache=False)
         end = today()
@@ -97,7 +107,25 @@ class DataReaderTest(TestCase):
         pdt.assert_almost_equal(df.ix[end]["Adj Close"], 1031.26)
         rmtree(self.stock_data_dir)
 
+    def test_cached_file_consistency(self):
+        """
+        Test if the cached file is created and if the data inside are valid
+        :return:
+        """
+        ticker = "GOOG"
+        end_caching = "2017-09-02"
+        df_caching = api.data_reader(ticker, end=end_caching)
+        cached_filename = path.join(self.stock_data_dir, 'GOOG.yahoo.csv')
+        self.assertTrue(path.isfile(cached_filename));
+
     def test_data_reader_with_cache(self):
+        """
+        Tests if the the web datareader is not called twice for the same time
+        range.
+        Test if the dataframe concatenation of cached and web-retrieved data
+        works.
+        :return:
+        """
         ticker = "GOOG"
         end_caching = "2017-09-02"
         df_caching = api.data_reader(ticker, end=end_caching)
@@ -107,7 +135,7 @@ class DataReaderTest(TestCase):
         end = "2017-11-02"
         df = api.data_reader(ticker, end=end)
         self.m_web_reader.assert_called_with(
-            ticker, "yahoo", start="2017-09-03", end=end
+            ticker, "yahoo", start="2017-09-02", end=end
         )
         expected = web_reader(ticker)[:end]
         pdt.assert_frame_equal(df_caching, expected[:end_caching])
