@@ -19,7 +19,7 @@ class DataReader(object):
         self.cache_dir = cache_dir or path.join(HOME_DIR, "stock-data")
         mkdir_if_not_exist(self.cache_dir)
 
-    def read(self, ticker, source="yahoo", end=None):
+    def read(self, ticker, source="yahoo", end=None, enable_cache=True):
         filename = path.join(self.cache_dir, ticker + ".csv")
         quote = fetch_live_quote(ticker) if end is None else None
         end = end or _today()
@@ -30,5 +30,5 @@ class DataReader(object):
         return df
 
 
-def data_reader(ticker, source="yahoo", end=None):
-    return DataReader().read(ticker, source, end)
+def data_reader(ticker, source="yahoo", end=None, enable_cache=False):
+    return DataReader().read(ticker, source, end, enable_cache)

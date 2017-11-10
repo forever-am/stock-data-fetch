@@ -79,25 +79,45 @@ class DataReaderTest(TestCase):
     def test_data_reader(self):
         ticker = "GOOG"
         end = "2017-11-02"
-        df = api.data_reader(ticker, end=end)
+        df = api.data_reader(ticker, end=end, enable_cache=False)
         self.m_web_reader.assert_called_with(
             ticker, "yahoo", start="1926-01-01", end=end
         )
         expected = web_reader(ticker)[:end]
         pdt.assert_frame_equal(df, expected)
+        rmtree(self.stock_data_dir)
 
     def test_data_reader_with_live_quote(self):
         ticker = "GOOG"
-        df = api.data_reader(ticker, end=None)
+        df = api.data_reader(ticker, end=None, enable_cache=False)
         end = today()
         collumns = ["Open", "High", "Low", "Close", "Volume"]
         expected = web_reader(ticker)[:end][collumns]
         pdt.assert_frame_equal(df[collumns], expected)
         pdt.assert_almost_equal(df.ix[end]["Adj Close"], 1031.26)
+        rmtree(self.stock_data_dir)
+
+    def test_data_reader_with_cache(self):
+        ticker = "GOOG"
+        end_caching = "2017-09-02"
+        df_caching = api.data_reader(ticker, end=end_caching)
+        self.m_web_reader.assert_called_with(
+            ticker, "yahoo", start="1926-01-01", end=end_caching
+        )
+        end = "2017-11-02"
+        df = api.data_reader(ticker, end=end)
+        self.m_web_reader.assert_called_with(
+            ticker, "yahoo", start="2017-09-03", end=end
+        )
+        expected = web_reader(ticker)[:end]
+        pdt.assert_frame_equal(df_caching, expected[:end_caching])
+        pdt.assert_frame_equal(df, expected)
+        rmtree(self.stock_data_dir)
 
     @classmethod
     def tearDownClass(cls):
-        rmtree(cls.stock_data_dir)
+        if path.exists(cls.stock_data_dir):
+            rmtree(cls.stock_data_dir)
 
 class LiveDataAPITest(TestCase):
     def setUp(self):
