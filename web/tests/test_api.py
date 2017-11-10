@@ -7,7 +7,7 @@ import pandas.util.testing as pdt
 from datetime import datetime
 
 from .. import api
-from ..live_data_api import fetch_live_data
+from .. import live_data_api
 
 TEST_DIR = path.dirname(__file__)
 
@@ -18,6 +18,14 @@ def _read_data_frame_csv(filename):
 def web_reader(ticker, *args, **kwargs):
     filename = path.join(TEST_DIR, "mock-stock-data", ticker + ".csv")
     return _read_data_frame_csv(filename)
+
+def _read_quote(filename):
+    with open(filename, "r") as quote_file:
+        return quote_file.read()
+
+def fetch_quote_data(ticker):
+    filename = path.join(TEST_DIR, "mock-stock-data", ticker + ".json")
+    return _read_quote(filename)
 
 
 @mock.patch(api.__name__ + ".mkdir")
@@ -32,10 +40,17 @@ class DataReaderTest(TestCase):
 
     def setUp(self):
         api.HOME_DIR = TEST_DIR
-        patcher1 = mock.patch(api.__name__ + ".web.DataReader",
+        patch_data_reader = mock.patch(api.__name__ + ".web.DataReader",
                               side_effect=web_reader)
-        self.m_web_reader = patcher1.start()
-        self.addCleanup(patcher1.stop)
+        self.m_web_reader = patch_data_reader.start()
+        self.addCleanup(patch_data_reader.stop)
+        self.reader = api.DataReader()
+
+        patch_get_quote = mock.patch(live_data_api.__name__
+                                     + ".fetch_quote_data",
+                                   side_effect=fetch_quote_data)
+        self.m_fetch_quote_data = patch_get_quote.start()
+        self.addCleanup(patch_get_quote.stop)
         self.reader = api.DataReader()
 
     def test_cache_dir(self):
@@ -57,11 +72,7 @@ class DataReaderTest(TestCase):
         current day when end=None
         """
         ticker = "GOOG"
-        end =  None
-        df = api.data_reader(ticker, end=end)
-        today = str(datetime.now().date())
-        pdt.assert_almost_equal(df.ix[today]["Adj Close"],
-                                fetch_live_data(ticker))
+        pdt.assert_almost_equal(1031.26, live_data_api.fetch_live_quote(ticker))
 
 
     @classmethod

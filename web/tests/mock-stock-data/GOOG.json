@@ -1,0 +1,975 @@
+
+// [
+{
+"symbol" : "GOOG",
+"exchange" : "NASDAQ",
+"id": "304466804484872",
+"t" : "GOOG",
+"e" : "NASDAQ",
+"name" : "Alphabet Inc"
+, "f_reuters_url" : "http:\u002F\u002Fstocks.us.reuters.com\u002Fstocks\u002Fratios.asp?rpc=66\u0026symbol=GOOGL.O",
+"f_recent_quarter_date" : "Q3 (Sep \u002717)",
+"f_annual_date" : "2016",
+"f_ttm_date" : "2015",
+"financials" :
+[{
+"f_type" : "Income\u0026nbsp\u003BStatement"
+,"url" : "http://www.google.com/finance?fstype=ii&q=NASDAQ:GOOGL"
+,"f_figures" :
+[
+{
+"title" : ""
+,"recent_quarter" : "27,772.00"
+,"annual" : "90,272.00"
+,"ttm" : "74,989.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "27,772.00"
+,"annual" : "90,272.00"
+,"ttm" : "74,989.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "11,148.00"
+,"annual" : "35,138.00"
+,"ttm" : "28,164.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "16,624.00"
+,"annual" : "55,134.00"
+,"ttm" : "46,825.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "4,637.00"
+,"annual" : "17,470.00"
+,"ttm" : "15,183.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "4,205.00"
+,"annual" : "13,948.00"
+,"ttm" : "12,282.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "0.00"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "19,990.00"
+,"annual" : "66,556.00"
+,"ttm" : "55,629.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "7,782.00"
+,"annual" : "23,716.00"
+,"ttm" : "19,360.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "0.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "55.00"
+,"annual" : "344.00"
+,"ttm" : "256.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "7,979.00"
+,"annual" : "24,150.00"
+,"ttm" : "19,651.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "6,732.00"
+,"annual" : "19,478.00"
+,"ttm" : "16,348.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "6,732.00"
+,"annual" : "19,478.00"
+,"ttm" : "16,348.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "6,732.00"
+,"annual" : "19,478.00"
+,"ttm" : "16,348.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "6,732.00"
+,"annual" : "19,478.00"
+,"ttm" : "15,826.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "6,732.00"
+,"annual" : "19,478.00"
+,"ttm" : "15,826.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "0.00"
+,"annual" : "0.00"
+,"ttm" : "0.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "750.79"
+,"annual" : "698.71"
+,"ttm" : "692.93"
+},
+{
+"title" : ""
+,"recent_quarter" : "8.97"
+,"annual" : "27.88"
+,"ttm" : "22.84"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "0.00"
+,"annual" : "0.00"
+,"ttm" : "0.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "8.97"
+,"annual" : "27.88"
+,"ttm" : "22.84"
+}
+]
+},
+{
+"f_type" : "Balance\u0026nbsp\u003BSheet"
+,"url" : "http://www.google.com/finance?fstype=bi&q=NASDAQ:GOOGL"
+,"f_figures" :
+[
+{
+"title" : ""
+,"recent_quarter" : "4,121.00"
+,"annual" : "5,840.00"
+,"ttm" : "9,169.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "89,675.00"
+,"annual" : "73,472.00"
+,"ttm" : "56,519.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "100,256.00"
+,"annual" : "86,390.00"
+,"ttm" : "73,068.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "15,295.00"
+,"annual" : "14,137.00"
+,"ttm" : "11,556.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "15,577.00"
+,"annual" : "14,232.00"
+,"ttm" : "13,909.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "765.00"
+,"annual" : "268.00"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "2,694.00"
+,"annual" : "3,979.00"
+,"ttm" : "2,511.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "53.00"
+,"annual" : "539.00"
+,"ttm" : "626.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "119,345.00"
+,"annual" : "105,408.00"
+,"ttm" : "90,114.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "56,358.00"
+,"annual" : "47,527.00"
+,"ttm" : "40,146.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-16,238.00"
+,"annual" : "-13,293.00"
+,"ttm" : "-11,130.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "16,731.00"
+,"annual" : "16,468.00"
+,"ttm" : "15,869.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "2,883.00"
+,"annual" : "3,307.00"
+,"ttm" : "3,847.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "7,269.00"
+,"annual" : "5,878.00"
+,"ttm" : "5,183.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "3,188.00"
+,"annual" : "2,202.00"
+,"ttm" : "3,432.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "189,536.00"
+,"annual" : "167,497.00"
+,"ttm" : "147,461.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "2,674.00"
+,"annual" : "2,041.00"
+,"ttm" : "1,931.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "12,747.00"
+,"annual" : "10,107.00"
+,"ttm" : "8,293.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "0.00"
+,"annual" : "0.00"
+,"ttm" : "2,000.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "0.00"
+,"annual" : "0.00"
+,"ttm" : "1,225.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "5,272.00"
+,"annual" : "4,608.00"
+,"ttm" : "5,861.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "20,693.00"
+,"annual" : "16,756.00"
+,"ttm" : "19,310.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "3,941.00"
+,"annual" : "3,935.00"
+,"ttm" : "1,995.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "23.00"
+,"annual" : "-"
+,"ttm" : "0.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "3,964.00"
+,"annual" : "3,935.00"
+,"ttm" : "1,995.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "3,964.00"
+,"annual" : "3,935.00"
+,"ttm" : "5,220.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "151.00"
+,"annual" : "226.00"
+,"ttm" : "189.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "7,628.00"
+,"annual" : "7,544.00"
+,"ttm" : "5,636.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "32,436.00"
+,"annual" : "28,461.00"
+,"ttm" : "27,130.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "0.00"
+,"annual" : "0.00"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "694,790.00"
+,"annual" : "0.69"
+,"ttm" : "0.69"
+},
+{
+"title" : ""
+,"recent_quarter" : "-655,181.00"
+,"annual" : "36,306.31"
+,"ttm" : "32,981.31"
+},
+{
+"title" : ""
+,"recent_quarter" : "118,237.00"
+,"annual" : "105,131.00"
+,"ttm" : "89,223.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-1,468.00"
+,"annual" : "-2,223.00"
+,"ttm" : "-1,788.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "157,100.00"
+,"annual" : "139,036.00"
+,"ttm" : "120,331.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "189,536.00"
+,"annual" : "167,497.00"
+,"ttm" : "147,461.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "694.79"
+,"annual" : "691.29"
+,"ttm" : "687.35"
+}
+]
+},
+{
+"f_type" : "Cash\u0026nbsp\u003BFlow"
+,"url" : "http://www.google.com/finance?fstype=ci&q=NASDAQ:GOOGL"
+,"f_figures" :
+[
+{
+"title" : ""
+,"recent_quarter" : "15,682.00"
+,"annual" : "19,478.00"
+,"ttm" : "16,348.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "4,272.00"
+,"annual" : "5,267.00"
+,"ttm" : "4,132.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "617.00"
+,"annual" : "877.00"
+,"ttm" : "931.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "242.00"
+,"annual" : "-38.00"
+,"ttm" : "-179.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "6,091.00"
+,"annual" : "7,152.00"
+,"ttm" : "5,749.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-81.00"
+,"annual" : "3,300.00"
+,"ttm" : "-409.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "26,823.00"
+,"annual" : "36,036.00"
+,"ttm" : "26,572.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-8,877.00"
+,"annual" : "-10,212.00"
+,"ttm" : "-9,950.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-15,550.00"
+,"annual" : "-20,953.00"
+,"ttm" : "-13,761.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-24,427.00"
+,"annual" : "-31,165.00"
+,"ttm" : "-23,711.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-3,111.00"
+,"annual" : "-3,304.00"
+,"ttm" : "-2,422.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "-"
+,"ttm" : "-"
+},
+{
+"title" : ""
+,"recent_quarter" : "-1,945.00"
+,"annual" : "-3,693.00"
+,"ttm" : "-1,780.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-64.00"
+,"annual" : "-1,335.00"
+,"ttm" : "-23.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-5,120.00"
+,"annual" : "-8,332.00"
+,"ttm" : "-4,225.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "387.00"
+,"annual" : "-170.00"
+,"ttm" : "-434.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-2,337.00"
+,"annual" : "-3,631.00"
+,"ttm" : "-1,798.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "84.00"
+,"ttm" : "96.00"
+},
+{
+"title" : ""
+,"recent_quarter" : "-"
+,"annual" : "1,643.00"
+,"ttm" : "3,651.00"
+}
+]
+}],
+"kr_recent_quarter_date" : "Q3 (Sep \u002717)",
+"kr_annual_date" : "2016",
+"kr_ttm_date" : "TTM",
+"keyratios" :
+[
+{
+"title" : "Net profit margin",
+"recent_quarter" : "24.24%",
+"annual" : "21.58%",
+"ttm" : "20.09%"
+},
+{
+"title" : "Operating margin",
+"recent_quarter" : "28.02%",
+"annual" : "26.27%",
+"ttm" : "24.02%"
+},
+{
+"title" : "EBITD margin",
+"recent_quarter" : "",
+"annual" : "33.03%",
+"ttm" : "32.89%"
+},
+{
+"title" : "Return on average assets",
+"recent_quarter" : "14.67%",
+"annual" : "12.37%",
+"ttm" : "12.03%"
+},
+{
+"title" : "Return on average equity",
+"recent_quarter" : "17.68%",
+"annual" : "15.02%",
+"ttm" : "14.43%"
+},
+{
+"title" : "Employees",
+"recent_quarter" : "72,053",
+"annual" : "-",
+"ttm" : "-"
+}
+]
+, "c" : "-8.59",
+"l" : "1,031.26",
+"cp" : "-0.83",
+"ccol" : "chr",
+"op" : "1,033.99",
+"hi" : "1,033.99",
+"lo" : "1,019.67",
+"vo" : "204.00",
+"avvo" : "1.37M",
+"hi52" : "1,048.39",
+"lo52" : "727.54",
+"mc" : "722.84B",
+"pe" : "35.15",
+"fwpe" : "",
+"beta" : "0.96",
+"eps" : "29.34",
+"dy" : "",
+"ldiv" : "",
+"shares" : "349.48M",
+"instown" : "69%",
+"eo":""
+, "sid" : "us-TRBC:57",
+"sname" : "Technology",
+"iid" : "us-TRBC:5720103011",
+"iname" : "Search Engines"
+, "related" : [
+{
+"id" : "304466804484872",
+"name" : "Alphabet Inc",
+"t" : "GOOG",
+"e" : "NASDAQ",
+"l" : "1,031.26",
+"c" : "-8.59",
+"mc" : "722.84B",
+"cp" : "-0.83",
+"ccol" : "chr"
+}
+,
+{
+"id" : "700029",
+"name" : "Baidu Inc (ADR)",
+"t" : "BIDU",
+"e" : "NASDAQ",
+"l" : "240.06",
+"c" : "-1.12",
+"mc" : "83.24B",
+"cp" : "-0.46",
+"ccol" : "chr"
+}
+,
+{
+"id" : "10670257",
+"name" : "Yandex NV",
+"t" : "YNDX",
+"e" : "NASDAQ",
+"l" : "31.92",
+"c" : "-0.80",
+"mc" : "10.42B",
+"cp" : "-2.44",
+"ccol" : "chr"
+}
+,
+{
+"id" : "358464",
+"name" : "Microsoft Corporation",
+"t" : "MSFT",
+"e" : "NASDAQ",
+"l" : "84.09",
+"c" : "-0.47",
+"mc" : "648.72B",
+"cp" : "-0.56",
+"ccol" : "chr"
+}
+,
+{
+"id" : "664197",
+"name" : "Lenovo Group Limited (ADR)",
+"t" : "LNVGY",
+"e" : "OTCMKTS",
+"l" : "11.60",
+"c" : "-0.10",
+"mc" : "6.42B",
+"cp" : "-0.85",
+"ccol" : "chr"
+}
+,
+{
+"id" : "22144",
+"name" : "Apple Inc.",
+"t" : "AAPL",
+"e" : "NASDAQ",
+"l" : "175.88",
+"c" : "-0.36",
+"mc" : "903.02B",
+"cp" : "-0.20",
+"ccol" : "chr"
+}
+,
+{
+"id" : "664887",
+"name" : "Verizon Communications Inc.",
+"t" : "VZ",
+"e" : "NYSE",
+"l" : "45.07",
+"c" : "-0.39",
+"mc" : "183.86B",
+"cp" : "-0.86",
+"ccol" : "chr"
+}
+,
+{
+"id" : "18241",
+"name" : "International Business Machines Corp.",
+"t" : "IBM",
+"e" : "NYSE",
+"l" : "150.30",
+"c" : "+0.23",
+"mc" : "139.15B",
+"cp" : "0.15",
+"ccol" : "chg"
+}
+,
+{
+"id" : "296878244325128",
+"name" : "Facebook Inc",
+"t" : "FB",
+"e" : "NASDAQ",
+"l" : "179.30",
+"c" : "-0.26",
+"mc" : "521.01B",
+"cp" : "-0.14",
+"ccol" : "chr"
+}
+,
+{
+"id" : "32086821185414",
+"name" : "Twitter Inc",
+"t" : "TWTR",
+"e" : "NYSE",
+"l" : "19.90",
+"c" : "+0.31",
+"mc" : "14.78B",
+"cp" : "1.58",
+"ccol" : "chg"
+}
+,
+{
+"id" : "820577505090886",
+"name" : "Google Inc. - Common Stock Ex-Distribution When Issued",
+"t" : "GOOAV",
+"e" : "NASDAQ",
+"l" : "568.67",
+"c" : "",
+"mc" : "",
+"cp" : "",
+"ccol" : ""
+}
+]
+, "summary" : [{
+"reuters_url" : "http:\u002F\u002Fstocks.us.reuters.com\u002Fstocks\u002FfullDescription.asp?rpc=66\u0026symbol=GOOGL.O",
+"address": "1600 Amphitheatre Pkwy, MOUNTAIN VIEW, CA 94043-1351, United States",
+"phone": "+1-650-2530000",
+"fax": "+1-302-6365454",
+"url": "https:\u002F\u002Fabc.xyz\u002F",
+"overview" : "Alphabet Inc. is a holding company. The Company\u0027s businesses include Google Inc. (Google) and its Internet products, such as Access, Calico, CapitalG, GV, Nest, Verily, Waymo and X. The Company\u0027s segments include Google and Other Bets. The Google segment includes its Internet products, such as Search, Ads, Commerce, Maps, YouTube, Google Cloud, Android, Chrome and Google Play, as well as its hardware initiatives. The Google segment is engaged in advertising, sales of digital content, applications and cloud offerings, and sales of hardware products. The Other Bets segment is engaged in the sales of Internet and television services through Google Fiber, sales of Nest products and services, and licensing and research and development (R\u0026D) services through Verily. It offers Google Assistant, which allows users to type or talk with Google\u003B Google Maps, which helps users navigate to a store, and Google Photos, which helps users store and organize all of their photos."
+} ]
+, "management" : [
+{
+"name" : "Eric E. Schmidt Ph.D.",
+"age" : "61",
+"title" : "Executive Chairman of the Board of Director"
+}
+,
+{
+"name" : "Sergey Brin",
+"age" : "43",
+"title" : "President, Director"
+}
+,
+{
+"name" : "Lawrence E. Page",
+"age" : "44",
+"title" : "Chief Executive Officer, Director"
+}
+,
+{
+"name" : "Ruth M. Porat",
+"age" : "59",
+"title" : "Chief Financial Officer, Senior Vice President"
+}
+,
+{
+"name" : "Sundar Pichai",
+"age" : "45",
+"title" : "Director, Chief Executive Officer, Google Inc."
+}
+,
+{
+"name" : "David C. Drummond",
+"age" : "54",
+"title" : "Senior Vice President - Corporate Development, Chief Legal Officer, Secretary"
+}
+,
+{
+"name" : "John L. Hennessy Ph.D.",
+"age" : "65",
+"title" : "Lead Independent Director"
+}
+,
+{
+"name" : "Diane B. Greene",
+"age" : "61",
+"title" : "Director"
+}
+,
+{
+"name" : "L. John Doerr",
+"age" : "65",
+"title" : "Independent Director"
+}
+,
+{
+"name" : "Roger W. Ferguson Jr.",
+"age" : "65",
+"title" : "Independent Director"
+}
+]
+,"moreresources" : [
+{ "name" : "Estimates" , "url" : "http:\u002F\u002Fwww.marketwatch.com\u002Ftools\u002Fquotes\u002Fsnapshot.asp?symb=GOOG\u0026pg=analyst"},
+{ "name" : "SEC Filings" , "url" : "http:\u002F\u002Fgoogle.brand.edgar-online.com\u002F?sym=GOOG"},
+{ "name" : "Major Holders" , "url" : "http:\u002F\u002Finvesting.money.msn.com\u002Finvestments\u002Finstitutional-ownership?symbol=GOOG"}
+,
+{ "name" : "Options" , "url" : "http:\u002F\u002Fwww.marketwatch.com\u002Ftools\u002Fquotes\u002Foptions1.asp?symb=GOOG"},
+{ "name" : "Research" , "url" : "http:\u002F\u002Ffinance.yahoo.com\u002Fq\u002Frr?s=GOOG"}
+]
+, "events" : [
+]
+}]
