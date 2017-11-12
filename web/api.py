@@ -101,7 +101,7 @@ class DataReader(object):
         if cache_end > end:
             return cache_df.ix[:end]
 
-        web_df = self._fetch_web_data(ticker, source, start=cache_end, end=end)
+        web_df = self._fetch_web_data(ticker, source, start=str(cache_end), end=end)
         return web_df.combine_first(cache_df)
 
     def _save_raw_data(self, ticker, source, df):
@@ -144,7 +144,7 @@ class DataReader(object):
         :param end: then end date of the time series range
         :return:
         """
-        today = _today()
+        today = str(_today())
         end = end or today
 
         raw_df = self._read_raw_data(ticker, source, start=self.origin, end=end)
@@ -157,7 +157,7 @@ class DataReader(object):
         quote = fetch_live_quote(ticker) if end == today else None
 
         if quote is not None:
-            df.ix[end, "Adj Close"] = quote
+            df.ix[end, self.AdjCloseCol] = quote
         self._save_raw_data(ticker, "reference", df)
 
         return df
