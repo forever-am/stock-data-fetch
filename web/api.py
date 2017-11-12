@@ -1,5 +1,6 @@
 from os import path, mkdir
 from datetime import datetime
+import math
 import numpy as np
 import pandas as pd
 import pandas_datareader.data as web
@@ -19,6 +20,14 @@ def _market_data_filename(source, ticker):
 def mkdir_if_not_exist(dir_path):
     if not path.exists(dir_path):
         mkdir(dir_path)
+
+# def _merge_values(default_value, value):
+#    return value if math.isnan(default_value) else default_value
+
+# def _merge_series(serie_a, serie_b):
+#    def merge_values(value):
+#        return _merge_values(value, )
+#    return serie_a.apply()
 
 class DataReader(object):
     OpenCol = "Open"
@@ -78,7 +87,7 @@ class DataReader(object):
         else:
             web_df[self.AdjCloseCol] = web_df[self.CloseCol]
         return web_df[[self.OpenCol, self.HighCol, self.LowCol, self.CloseCol,
-                       self.AdjCloseCol, self.VolumeCol]]
+                       self.AdjCloseCol, self.VolumeCol]].ix[:end]
 
     def _read_raw_data(self, ticker, source, start, end):
         """
@@ -131,6 +140,9 @@ class DataReader(object):
         """
         if ref_df is None:
             return raw_df
+
+        ref_start = str(ref_df.index[0].date())
+        ref_df = ref_df.combine_first(raw_df.ix[:ref_start])
 
         ref_end = str(ref_df.index[-1].date())
         return ref_df.combine_first(raw_df.ix[ref_end:])

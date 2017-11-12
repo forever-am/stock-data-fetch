@@ -38,6 +38,7 @@ def test_mkdir_if_not_exist(m_mkdir):
 class DataReaderTest(TestCase):
     GoogleTicker = "GOOG"
     YahooSource = "yahoo"
+    GoogleSource = "google"
     stock_data_dir = path.join(TEST_DIR, "stock-data")
 
     def setUp(self):
@@ -84,7 +85,7 @@ class DataReaderTest(TestCase):
         self.m_web_reader.assert_called_with(
             ticker, self.YahooSource, start="1926-01-01", end=end
         )
-        expected = web_reader(ticker, "yahoo")[:end]
+        expected = web_reader(ticker, self.YahooSource)[:end]
         pdt.assert_frame_equal(df, expected)
         rmtree(self.stock_data_dir)
 
@@ -98,7 +99,7 @@ class DataReaderTest(TestCase):
                              enable_cache=False, use_reference=False)
         end = today()
         columns = ["Open", "High", "Low", "Close", "Volume"]
-        expected = web_reader(ticker, "yahoo")[:end][columns]
+        expected = web_reader(ticker, self.YahooSource)[:end][columns]
         pdt.assert_frame_equal(df[columns], expected)
         pdt.assert_almost_equal(df.ix[end]["Adj Close"], 1031.26)
         rmtree(self.stock_data_dir)
@@ -146,7 +147,7 @@ class DataReaderTest(TestCase):
         self.m_web_reader.assert_called_with(
             ticker, self.YahooSource, start="2017-09-01", end=end
         )
-        expected = web_reader(ticker, "yahoo")[:end]
+        expected = web_reader(ticker, self.YahooSource)[:end]
         pdt.assert_frame_equal(df_caching, expected[:end_caching])
         pdt.assert_frame_equal(df, expected)
         rmtree(self.stock_data_dir)
@@ -161,19 +162,44 @@ class DataReaderTest(TestCase):
         """
         ticker = self.GoogleTicker
         end_caching = "2017-09-01"
-        df_caching = api.data_reader(ticker, end=end_caching,
-                                     use_reference=True)
+        df_caching = api.data_reader(ticker, end=end_caching)
         self.m_web_reader.assert_called_with(
             ticker, self.YahooSource, start="1926-01-01", end=end_caching
         )
         end = "2017-11-02"
-        df = api.data_reader(ticker, end=end, use_reference=True)
+        df = api.data_reader(ticker, end=end)
         self.m_web_reader.assert_called_with(
             ticker, self.YahooSource, start="2017-09-01", end=end
         )
-        expected = web_reader(ticker, "yahoo")[:end]
+        expected = web_reader(ticker, self.YahooSource)[:end]
         pdt.assert_frame_equal(df_caching, expected[:end_caching])
         pdt.assert_frame_equal(df, expected)
+        rmtree(self.stock_data_dir)
+
+    def test_data_reader_using_reference_from_multiple_sources(self):
+        """
+        Test if the dataframe concatenation works in the reference
+        works.
+        :return:
+        """
+        ticker = self.GoogleTicker
+        end = "2017-09-01"
+        df_ref_g = api.data_reader(ticker, end=end, source=self.GoogleSource)
+        self.m_web_reader.assert_called_with(
+            ticker, self.GoogleSource, start="1926-01-01", end=end
+        )
+
+        df_ref_y = api.data_reader(ticker, end=end, source=self.YahooSource)
+        self.m_web_reader.assert_called_with(
+            ticker, self.YahooSource, start="1926-01-01", end=end
+        )
+        start_ref_g = str(df_ref_g.index[0].date());
+        end_ref_g = str(df_ref_g.index[-1].date());
+        pdt.assert_frame_equal(df_ref_y.ix[start_ref_g:end_ref_g],
+                               df_ref_g)
+
+        expected = web_reader(ticker, "googleyahoo")[:end]
+        pdt.assert_frame_equal(df_ref_y, expected)
         rmtree(self.stock_data_dir)
 
     @classmethod
