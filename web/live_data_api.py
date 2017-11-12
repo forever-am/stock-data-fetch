@@ -57,9 +57,9 @@ def get_google_quote_date(ticker):
 
 def fetch_quote_txt_data(ticker):
     """
-    Download data of the given ticker containing price, volume..
-    :param ticker: the ticker of the instrument
-    :return: the raw data
+    Parse result to get the with the date/open/high/low/close
+    :param data: the response data
+    :return: the list of results containing the date in the first position
     """
     url = "https://finance.google.com/finance/getprices?q=%s&p=1d&f=d,o,h,l,c,v"\
           % ticker
@@ -68,6 +68,12 @@ def fetch_quote_txt_data(ticker):
     return resp.read()
 
 def _parse_google_txt_quote_result(data):
+    """
+    Download data from the last current/last trading day of the given ticker
+    It contains date, price, volume
+    :param ticker: the ticker of the instrument
+    :return: the raw data
+    """
     lines = data.splitlines()
     quote_marker = False
     for line in lines:
