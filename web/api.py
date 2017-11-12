@@ -68,13 +68,13 @@ class DataReader(object):
         :return: a data frame containing the web normalized market data
         """
         web_df = web.DataReader(ticker, source, start=start, end=end)
-        web_df[self.OpenCol].astype(np.float64)
-        web_df[self.CloseCol].astype(np.float64)
-        web_df[self.HighCol].astype(np.float64)
-        web_df[self.LowCol].astype(np.float64)
-        web_df[self.VolumeCol].astype(np.float64)
+        web_df[self.OpenCol] = web_df[self.OpenCol].astype(np.float64)
+        web_df[self.CloseCol] = web_df[self.CloseCol].astype(np.float64)
+        web_df[self.HighCol] = web_df[self.HighCol].astype(np.float64)
+        web_df[self.LowCol] = web_df[self.LowCol].astype(np.float64)
+        web_df[self.VolumeCol] = web_df[self.VolumeCol].astype(np.float64)
         if self.AdjCloseCol in web_df.columns:
-            web_df[self.AdjCloseCol].astype(np.float64)
+            web_df[self.AdjCloseCol] = web_df[self.AdjCloseCol].astype(np.float64)
         else:
             web_df[self.AdjCloseCol] = web_df[self.CloseCol]
         return web_df[[self.OpenCol, self.HighCol, self.LowCol, self.CloseCol,
