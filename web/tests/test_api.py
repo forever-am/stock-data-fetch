@@ -40,6 +40,15 @@ def fetch_quote_data(ticker):
     filename = path.join(TEST_DIR, "mock-stock-data", ticker + ".json")
     return _read_quote(filename)
 
+def fetch_quote_txt_data(ticker):
+    """
+    Retrive quote under Google finance API from a file
+    :param ticker: the instrument ticker
+    :return:
+    """
+    filename = path.join(TEST_DIR, "mock-stock-data", ticker + ".txt")
+    return _read_quote(filename)
+
 def today():
     return '2017-11-2'
 
@@ -73,10 +82,16 @@ class DataReaderTest(TestCase):
         self.addCleanup(patch_time_now.stop)
 
         patch_get_quote = mock.patch(live_data_api.__name__
-                                     + ".fetch_quote_data",
+                                     + ".fetch_quote_json_data",
                                      side_effect=fetch_quote_data)
         self.m_fetch_quote_data = patch_get_quote.start()
         self.addCleanup(patch_get_quote.stop)
+
+        patch_get_quote_date = mock.patch(live_data_api.__name__
+                                          + ".fetch_quote_txt_data",
+                                          side_effect=fetch_quote_txt_data)
+        self.m_fetch_quote_data_date = patch_get_quote_date.start()
+        self.addCleanup(patch_get_quote_date.stop)
 
     def test_cache_dir(self):
         self.assertEqual(self.reader.cache_dir, self.stock_data_dir)
@@ -200,10 +215,16 @@ class LiveDataAPITest(TestCase):
         """
         api.HOME_DIR = TEST_DIR
         patch_get_quote = mock.patch(live_data_api.__name__
-                                     + ".fetch_quote_data",
+                                     + ".fetch_quote_json_data",
                                    side_effect=fetch_quote_data)
         self.m_fetch_quote_data = patch_get_quote.start()
         self.addCleanup(patch_get_quote.stop)
+
+        patch_get_quote_date = mock.patch(live_data_api.__name__
+                                     + ".fetch_quote_txt_data",
+                                     side_effect=fetch_quote_txt_data)
+        self.m_fetch_quote_data_date = patch_get_quote_date.start()
+        self.addCleanup(patch_get_quote_date.stop)
 
     def test_realtime_data_reader(self):
         """
@@ -211,4 +232,6 @@ class LiveDataAPITest(TestCase):
         current day when end=None
         """
         ticker = self.GoogleTicker
-        self.assertEqual(1031.26, live_data_api.fetch_live_quote(ticker))
+        quote = live_data_api.fetch_live_quote(ticker)
+        self.assertEqual(datetime(2017, 11, 2, 20, 0), quote[0])
+        self.assertEqual(1031.26, quote[1])

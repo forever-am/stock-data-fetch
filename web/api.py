@@ -135,6 +135,15 @@ class DataReader(object):
         ref_end = str(ref_df.index[-1].date())
         return ref_df.combine_first(raw_df.ix[ref_end:])
 
+    def _update_with_live_quote(self, ticker, df):
+        quote = fetch_live_quote(ticker)
+
+        if quote is not None:
+            quote_date = quote[0].date()
+            quote_value = quote[1]
+            if df.index[-1].date() == quote_date:
+                df.ix[quote_date, self.AdjCloseCol] = quote_value
+
     def read(self, ticker, source="yahoo", end=None):
         """
         API to fetch source or reference data from the cache and/or the web when
@@ -154,10 +163,10 @@ class DataReader(object):
         if self.use_reference:
             ref_df = self._read_cache(ticker, "reference")
             df = self._combine_ref_and_raw_data(ref_df, raw_df)
-        quote = fetch_live_quote(ticker) if end == today else None
 
-        if quote is not None:
-            df.ix[end, self.AdjCloseCol] = quote
+        if end == today:
+            self._update_with_live_quote(ticker, df)
+
         self._save_raw_data(ticker, "reference", df)
 
         return df
