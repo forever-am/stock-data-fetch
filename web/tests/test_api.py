@@ -2,18 +2,18 @@ from os import path
 from shutil import rmtree
 from unittest import TestCase
 import mock
+
 import pandas as pd
 import pandas.util.testing as pdt
-
 
 from .. import api
 from .. import live_data_api
 
-from test_live_data_api import fetch_quote_data
-from test_live_data_api import fetch_quote_txt_data
+from .test_live_data_api import fetch_quote_data
+from .test_live_data_api import fetch_quote_txt_data
+
 
 TEST_DIR = path.dirname(__file__)
-
 
 def _read_data_frame_csv(filename):
     return pd.read_csv(filename, parse_dates=True, index_col=0)
