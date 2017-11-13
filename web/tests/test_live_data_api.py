@@ -60,5 +60,5 @@ class LiveDataAPITest(TestCase):
         """
         ticker = self.GoogleTicker
         quote = live_data_api.fetch_live_quote(ticker)
-        self.assertEqual(datetime(2017, 11, 2, 20, 0), quote[0])
+        self.assertEqual(datetime(2017, 11, 2, 20, 0).date(), quote[0].date())
         self.assertEqual(1031.26, quote[1])
