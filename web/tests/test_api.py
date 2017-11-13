@@ -15,8 +15,10 @@ from .test_live_data_api import fetch_quote_txt_data
 
 TEST_DIR = path.dirname(__file__)
 
+
 def _read_data_frame_csv(filename):
     return pd.read_csv(filename, parse_dates=True, index_col=0)
+
 
 def web_reader(ticker, source, *args, **kwargs):
     filename = path.join(TEST_DIR, "mock-stock-data",
@@ -25,8 +27,10 @@ def web_reader(ticker, source, *args, **kwargs):
     end = kwargs["end"] if "end" in kwargs else None
     return _read_data_frame_csv(filename).ix[start:end]
 
+
 def today():
     return '2017-11-2'
+
 
 @mock.patch(api.__name__ + ".mkdir")
 def test_mkdir_if_not_exist(m_mkdir):
@@ -48,7 +52,7 @@ class DataReaderTest(TestCase):
         """
         api.HOME_DIR = TEST_DIR
         patch_data_reader = mock.patch(api.__name__ + ".web.DataReader",
-                              side_effect=web_reader)
+                                       side_effect=web_reader)
         self.m_web_reader = patch_data_reader.start()
         self.addCleanup(patch_data_reader.stop)
         self.reader = api.DataReader()
@@ -111,21 +115,9 @@ class DataReaderTest(TestCase):
         """
         ticker = self.GoogleTicker
         end_caching = "2017-09-02"
-        df_caching = api.data_reader(ticker, end=end_caching,
-                                     use_reference=False)
+        api.data_reader(ticker, end=end_caching, use_reference=False)
         cached_filename = path.join(self.stock_data_dir, 'GOOG.yahoo.csv')
-        self.assertTrue(path.isfile(cached_filename));
-    def test_cache_file_consistency(self):
-        """
-        Test if the cached file is created and if the data inside are valid
-        :return:
-        """
-        ticker = self.GoogleTicker
-        end_caching = "2017-09-02"
-        df_caching = api.data_reader(ticker, end=end_caching,
-                                     use_reference=False)
-        cached_filename = path.join(self.stock_data_dir, 'GOOG.yahoo.csv')
-        self.assertTrue(path.isfile(cached_filename));
+        self.assertTrue(path.isfile(cached_filename))
 
     def test_data_reader_with_cache(self):
         """
@@ -193,8 +185,8 @@ class DataReaderTest(TestCase):
         self.m_web_reader.assert_called_with(
             ticker, self.YahooSource, start="1926-01-01", end=end
         )
-        start_ref_g = str(df_ref_g.index[0].date());
-        end_ref_g = str(df_ref_g.index[-1].date());
+        start_ref_g = str(df_ref_g.index[0].date())
+        end_ref_g = str(df_ref_g.index[-1].date())
         pdt.assert_frame_equal(df_ref_y.ix[start_ref_g:end_ref_g],
                                df_ref_g)
 
@@ -206,4 +198,3 @@ class DataReaderTest(TestCase):
     def tearDownClass(cls):
         if path.exists(cls.stock_data_dir):
             rmtree(cls.stock_data_dir)
-

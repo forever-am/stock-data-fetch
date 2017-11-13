@@ -2,7 +2,7 @@
 This file contains the api to fetch realtime price of a given instrument
 """
 
-#from googlefinance import getQuotes
+# from googlefinance import getQuotes
 import json
 from datetime import datetime
 
@@ -18,12 +18,13 @@ def fetch_live_quote(ticker):
     :param ticker: The instrument ticker
     :return: The quote and the date of this quote
     """
-    #google realtime api is no more working since 2017-09-07
+    # google realtime api is no more working since 2017-09-07
     #return getQuotes(ticker)
     quote_ts = int(get_google_quote_date(ticker))
     date = datetime.fromtimestamp(quote_ts)
     quote = float(get_google_delayed_quote(ticker))
     return (date, quote) if (date is not None) and (quote is not None) else None
+
 
 def get_google_delayed_quote(ticker):
     """
@@ -34,6 +35,7 @@ def get_google_delayed_quote(ticker):
     data = fetch_quote_json_data(ticker).strip()
     content = json.loads(data[3:])
     return content[0]["l"].replace(',', '')
+
 
 def fetch_quote_json_data(ticker):
     """
@@ -46,6 +48,7 @@ def fetch_quote_json_data(ticker):
     resp = urlopen(request)
     return resp.read()
 
+
 def get_google_quote_date(ticker):
     """
     Retrieve 15-min-delayed quote from the Google price API
@@ -55,23 +58,26 @@ def get_google_quote_date(ticker):
     data = fetch_quote_txt_data(ticker)
     return _parse_google_txt_quote_result(data)
 
+
 def fetch_quote_txt_data(ticker):
     """
-    Parse result to get the with the date/open/high/low/close
-    :param data: the response data
+    Download data from the last current/last trading day of the given ticker
+    It contains date, price, volume
+    :param ticker: the instrument ticker
     :return: the list of results containing the date in the first position
     """
-    url = "https://finance.google.com/finance/getprices?q=%s&p=1d&f=d,o,h,l,c,v"\
+    url =\
+        "https://finance.google.com/finance/getprices?q=%s&p=1d&f=d,o,h,l,c,v"\
           % ticker
     request = Request(url)
     resp = urlopen(request)
     return resp.read()
 
+
 def _parse_google_txt_quote_result(data):
     """
-    Download data from the last current/last trading day of the given ticker
-    It contains date, price, volume
-    :param ticker: the ticker of the instrument
+    Parse result to get the with the date/open/high/low/close
+    :param data: the data to parse
     :return: the raw data
     """
     lines = data.splitlines()

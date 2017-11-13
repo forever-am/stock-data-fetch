@@ -56,7 +56,6 @@ class DataReader(object):
         Read market data from a file identified by <ticker>.<source>.csv
         :param ticker: the instrument ticker
         :param source: the source vendor of market data
-        :param end: the end date of the time series range
         :return: a data frame containing the desired market data
         """
         filepath = path.join(self.cache_dir, _market_data_filename(source,
@@ -83,7 +82,8 @@ class DataReader(object):
         web_df[self.LowCol] = web_df[self.LowCol].astype(np.float64)
         web_df[self.VolumeCol] = web_df[self.VolumeCol].astype(np.float64)
         if self.AdjCloseCol in web_df.columns:
-            web_df[self.AdjCloseCol] = web_df[self.AdjCloseCol].astype(np.float64)
+            web_df[self.AdjCloseCol] =\
+                web_df[self.AdjCloseCol].astype(np.float64)
         else:
             web_df[self.AdjCloseCol] = web_df[self.CloseCol]
         return web_df[[self.OpenCol, self.HighCol, self.LowCol, self.CloseCol,
@@ -110,7 +110,8 @@ class DataReader(object):
         if cache_end > end:
             return cache_df.ix[:end]
 
-        web_df = self._fetch_web_data(ticker, source, start=str(cache_end), end=end)
+        web_df = self._fetch_web_data(ticker, source, start=str(cache_end),
+                                      end=end)
         return web_df.combine_first(cache_df)
 
     def _save_raw_data(self, ticker, source, df):
@@ -182,6 +183,7 @@ class DataReader(object):
         self._save_raw_data(ticker, "reference", df)
 
         return df
+
 
 def data_reader(ticker, source="yahoo", end=None,
                 enable_cache=True, use_reference=True):
