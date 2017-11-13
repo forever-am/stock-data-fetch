@@ -3,7 +3,7 @@ from datetime import datetime
 import numpy as np
 import pandas as pd
 import pandas_datareader.data as web
-from live_data_api import fetch_live_quote
+from .live_data_api import fetch_live_quote
 
 HOME_DIR = path.expanduser("~")
 
