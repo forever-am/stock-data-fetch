@@ -4,10 +4,13 @@ from unittest import TestCase
 import mock
 import pandas as pd
 import pandas.util.testing as pdt
-from datetime import datetime
+
 
 from .. import api
 from .. import live_data_api
+
+from test_live_data_api import fetch_quote_data
+from test_live_data_api import fetch_quote_txt_data
 
 TEST_DIR = path.dirname(__file__)
 
@@ -21,33 +24,6 @@ def web_reader(ticker, source, *args, **kwargs):
     start = kwargs["start"] if "start" in kwargs else None
     end = kwargs["end"] if "end" in kwargs else None
     return _read_data_frame_csv(filename).ix[start:end]
-
-def _read_quote(filename):
-    """
-    Read the file containing json response of Google finance API
-    :param filename: the name of the file
-    :return:
-    """
-    with open(filename, "r") as quote_file:
-        return quote_file.read()
-
-def fetch_quote_data(ticker):
-    """
-    Retrive quote under Google finance API from a file
-    :param ticker: the instrument ticker
-    :return:
-    """
-    filename = path.join(TEST_DIR, "mock-stock-data", ticker + ".json")
-    return _read_quote(filename)
-
-def fetch_quote_txt_data(ticker):
-    """
-    Retrive quote under Google finance API from a file
-    :param ticker: the instrument ticker
-    :return:
-    """
-    filename = path.join(TEST_DIR, "mock-stock-data", ticker + ".txt")
-    return _read_quote(filename)
 
 def today():
     return '2017-11-2'
@@ -205,33 +181,3 @@ class DataReaderTest(TestCase):
         if path.exists(cls.stock_data_dir):
             rmtree(cls.stock_data_dir)
 
-class LiveDataAPITest(TestCase):
-    GoogleTicker = "GOOG"
-
-    def setUp(self):
-        """
-        Prepare env before running unit tests
-        :return:
-        """
-        api.HOME_DIR = TEST_DIR
-        patch_get_quote = mock.patch(live_data_api.__name__
-                                     + ".fetch_quote_json_data",
-                                   side_effect=fetch_quote_data)
-        self.m_fetch_quote_data = patch_get_quote.start()
-        self.addCleanup(patch_get_quote.stop)
-
-        patch_get_quote_date = mock.patch(live_data_api.__name__
-                                     + ".fetch_quote_txt_data",
-                                     side_effect=fetch_quote_txt_data)
-        self.m_fetch_quote_data_date = patch_get_quote_date.start()
-        self.addCleanup(patch_get_quote_date.stop)
-
-    def test_realtime_data_reader(self):
-        """
-        Test if the dataframe contains realtime price in "Adj close" for the
-        current day when end=None
-        """
-        ticker = self.GoogleTicker
-        quote = live_data_api.fetch_live_quote(ticker)
-        self.assertEqual(datetime(2017, 11, 2, 20, 0), quote[0])
-        self.assertEqual(1031.26, quote[1])
