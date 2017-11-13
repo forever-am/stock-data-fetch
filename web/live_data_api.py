@@ -31,7 +31,7 @@ def get_google_delayed_quote(ticker):
     :param ticker: The instrument ticker
     :return: The quote formatted like XXX.xx
     """
-    data = fetch_quote_json_data(ticker).decode('ascii', 'ignore').strip()
+    data = fetch_quote_json_data(ticker).strip()
     content = json.loads(data[3:])
     return content[0]["l"].replace(',', '')
 
@@ -52,7 +52,7 @@ def get_google_quote_date(ticker):
     :param ticker: The instrument ticker
     :return: The quote formatted like XXX.xx
     """
-    data = fetch_quote_txt_data(ticker).decode('ascii', 'ignore')
+    data = fetch_quote_txt_data(ticker)
     return _parse_google_txt_quote_result(data)
 
 def fetch_quote_txt_data(ticker):
