@@ -87,7 +87,7 @@ class DataReader(object):
         else:
             web_df[self.AdjCloseCol] = web_df[self.CloseCol]
         return web_df[[self.OpenCol, self.HighCol, self.LowCol, self.CloseCol,
-                       self.AdjCloseCol, self.VolumeCol]].ix[:end]
+                       self.AdjCloseCol, self.VolumeCol]].loc[:end]
 
     def _read_raw_data(self, ticker, source, start, end):
         """
@@ -108,7 +108,7 @@ class DataReader(object):
 
         cache_end = str(cache_df.index[-1].date())
         if cache_end > end:
-            return cache_df.ix[:end]
+            return cache_df.loc[:end]
 
         web_df = self._fetch_web_data(ticker, source, start=str(cache_end),
                                       end=end)
@@ -143,10 +143,10 @@ class DataReader(object):
             return raw_df
 
         ref_start = str(ref_df.index[0].date())
-        ref_df = ref_df.combine_first(raw_df.ix[:ref_start])
+        ref_df = ref_df.combine_first(raw_df.loc[:ref_start])
 
         ref_end = str(ref_df.index[-1].date())
-        return ref_df.combine_first(raw_df.ix[ref_end:])
+        return ref_df.combine_first(raw_df.loc[ref_end:])
 
     def _update_with_live_quote(self, ticker, df):
         quote = fetch_live_quote(ticker)
@@ -155,7 +155,7 @@ class DataReader(object):
             quote_date = quote[0].date()
             quote_value = quote[1]
             if df.index[-1].date() == quote_date:
-                df.ix[quote_date, self.AdjCloseCol] = quote_value
+                df.loc[quote_date, self.AdjCloseCol] = quote_value
 
     def read(self, ticker, source="yahoo", end=None):
         """

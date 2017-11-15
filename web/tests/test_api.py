@@ -25,7 +25,7 @@ def web_reader(ticker, source, *args, **kwargs):
                          ticker + "." + source + ".csv")
     start = kwargs["start"] if "start" in kwargs else None
     end = kwargs["end"] if "end" in kwargs else None
-    return _read_data_frame_csv(filename).ix[start:end]
+    return _read_data_frame_csv(filename).loc[start:end]
 
 
 def today():
@@ -105,7 +105,7 @@ class DataReaderTest(TestCase):
         columns = ["Open", "High", "Low", "Close", "Volume"]
         expected = web_reader(ticker, self.YahooSource)[:end][columns]
         pdt.assert_frame_equal(df[columns], expected)
-        pdt.assert_almost_equal(df.ix[end]["Adj Close"], 1031.26)
+        pdt.assert_almost_equal(df.loc[end]["Adj Close"], 1031.26)
         rmtree(self.stock_data_dir)
 
     def test_cache_file_consistency(self):
@@ -187,7 +187,7 @@ class DataReaderTest(TestCase):
         )
         start_ref_g = str(df_ref_g.index[0].date())
         end_ref_g = str(df_ref_g.index[-1].date())
-        pdt.assert_frame_equal(df_ref_y.ix[start_ref_g:end_ref_g],
+        pdt.assert_frame_equal(df_ref_y.loc[start_ref_g:end_ref_g],
                                df_ref_g)
 
         expected = web_reader(ticker, "googleyahoo")[:end]
