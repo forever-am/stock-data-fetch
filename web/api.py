@@ -4,7 +4,9 @@ import math
 import numpy as np
 import pandas as pd
 import pandas_datareader.data as web
+
 from .live_data_api import fetch_live_quote
+from .aggregation_strategies import average_strategy
 
 HOME_DIR = path.expanduser("~")
 
@@ -38,6 +40,8 @@ class DataReader(object):
     VolumeCol = "Volume"
 
     origin = "1926-01-01"
+    Sources = ["yahoo", "google-realtime", "quandl"]
+    ReferenceSource = "reference"
 
     def __init__(self, cache_dir=None, enable_cache=True, use_reference=True):
         """
@@ -116,6 +120,18 @@ class DataReader(object):
                                       end=end)
         return web_df.combine_first(cache_df)
 
+    def _read_raw_data_multi_sources(self, ticker, sources, start, end):
+        """
+        Read data from several sources
+        :param ticker: the instrument ticker
+        :param source: the source vendor of market data
+        :param start: then begin date of the time series range
+        :param end: then end date of the time series range
+        :return: a dictionary under format source: dataframe
+        """
+        return {source: self._read_raw_data(ticker, source, start, end)
+               for source in sources}
+
     def _save_raw_data(self, ticker, source, df):
         """
         Save the data frame under the cache folder with the following format:
@@ -159,6 +175,13 @@ class DataReader(object):
         return ref_df.combine_first(raw_df.loc[ref_end:])
 
     def _update_with_live_quote(self, ticker, df):
+        """
+        Update data frame with a live quote provided by google realtime api if
+        the quote date (today) correspond to the last row of the dataframe
+        :param ticker: the instrument ticker
+        :param df: the data frame to update
+        :return:
+        """
         quote = fetch_live_quote(ticker)
 
         if quote is not None:
@@ -186,15 +209,41 @@ class DataReader(object):
         df = raw_df
 
         if self.use_reference:
-            ref_df = self._read_cache(ticker, "reference")
+            ref_df = self._read_cache(ticker, self.ReferenceSource)
             df = self._combine_ref_and_raw_data(ref_df, raw_df)
 
-        self._save_raw_data(ticker, "reference", df)
+        self._save_raw_data(ticker, self.ReferenceSource, df)
 
         return df
+
+    def read_multi_sources(self, ticker, sources=Sources, end=None,
+                          aggregation_strategy=average_strategy):
+        """
+        Read the market data from several sources and aggregate them into a
+        reference following the given strategy
+        :param ticker: the instrument ticker
+        :param source: the source vendor of market data
+        :param start: then begin date of the time series range
+        :param end: then end date of the time series range
+        :param aggregation_strategy: a function which aggregate a list of df into one df
+        :return: the aggregated reference
+        """
+        today = str(_today())
+        end = end or today
+
+        dfs = self._read_raw_data_multi_sources(ticker, sources,
+                                                self.origin, end)
+        for source, raw_df in dfs.iteritems():
+            self._save_raw_data(ticker, source, raw_df)
+        ref_df = aggregation_strategy(dfs.values())
+        self._save_raw_data(ticker, self.ReferenceSource, ref_df)
+        return ref_df
 
 
 def data_reader(ticker, source="yahoo", end=None,
                 enable_cache=True, use_reference=True):
     reader = DataReader(enable_cache=enable_cache, use_reference=use_reference)
-    return reader.read(ticker, source, end)
+    if source == "all":
+        return reader.read_multi_sources(ticker, end=end)
+    else:
+        return reader.read(ticker, source, end)

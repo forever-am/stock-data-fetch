@@ -41,10 +41,17 @@ def test_mkdir_if_not_exist(m_mkdir):
 
 class DataReaderTest(TestCase):
     StableColumns = ["Open", "High", "Low", "Close"]
+
     GoogleTicker = "GOOG"
+    AppleTicker = "AAPL"
+
     YahooSource = "yahoo"
     GoogleSource = "google"
     GoogleRealtimeSource = "google-realtime"
+    QuandlSource = "quandl"
+    AllSources = "all"
+    GoogleRealtimeSource = "google-realtime"
+
     stock_data_dir = path.join(TEST_DIR, "stock-data")
 
     def setUp(self):
@@ -204,6 +211,13 @@ class DataReaderTest(TestCase):
         expected_adj_close = web_reader(ticker, self.YahooSource)[:end]["Adj Close"]
         pdt.assert_series_equal(df_ref_y["Adj Close"], expected_adj_close)
         rmtree(self.stock_data_dir)
+
+    def test_data_reader_all(self):
+        ticker = self.AppleTicker
+        df_ref = api.data_reader(ticker, source=self.AllSources)
+        end = "2017-11-02"
+        expected = web_reader(ticker, "reference")
+        pdt.assert_frame_equal(df_ref, expected)
 
     @classmethod
     def tearDownClass(cls):
