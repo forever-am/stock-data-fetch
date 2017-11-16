@@ -40,10 +40,11 @@ def test_mkdir_if_not_exist(m_mkdir):
 
 
 class DataReaderTest(TestCase):
-    StaticColumns = ["Open", "High", "Low", "Close"]
+    StableColumns = ["Open", "High", "Low", "Close"]
     GoogleTicker = "GOOG"
     YahooSource = "yahoo"
     GoogleSource = "google"
+    GoogleRealtimeSource = "google-realtime"
     stock_data_dir = path.join(TEST_DIR, "stock-data")
 
     def setUp(self):
@@ -100,11 +101,11 @@ class DataReaderTest(TestCase):
         :return:
         """
         ticker = self.GoogleTicker
-        df = api.data_reader(ticker, end=None,
+        df = api.data_reader(ticker, source=self.GoogleRealtimeSource, end=None,
                              enable_cache=False, use_reference=False)
         end = today()
         columns = ["Open", "High", "Low", "Close", "Volume"]
-        expected = web_reader(ticker, self.YahooSource)[:end][columns]
+        expected = web_reader(ticker, self.GoogleSource)[:end][columns]
         pdt.assert_frame_equal(df[columns], expected)
         pdt.assert_almost_equal(df.loc[end]["Adj Close"], 1031.26)
         rmtree(self.stock_data_dir)
@@ -188,16 +189,16 @@ class DataReaderTest(TestCase):
         )
         start_ref_g = str(df_ref_g.index[0].date())
         end_ref_g = str(df_ref_g.index[-1].date())
-        sub_df_ref_y = df_ref_y.loc[start_ref_g:end_ref_g][self.StaticColumns]
+        sub_df_ref_y = df_ref_y.loc[start_ref_g:end_ref_g][self.StableColumns]
 
-        sub_df_ref_g = df_ref_g[self.StaticColumns]
+        sub_df_ref_g = df_ref_g[self.StableColumns]
         pdt.assert_frame_equal(sub_df_ref_g, sub_df_ref_y)
 
         # test if the static columns of the reference are correctly completed
         # with the columns of yahoo source
         expected = web_reader(ticker, "googleyahoo")[:end]
-        pdt.assert_frame_equal(df_ref_y[self.StaticColumns],
-                               expected[self.StaticColumns])
+        pdt.assert_frame_equal(df_ref_y[self.StableColumns],
+                               expected[self.StableColumns])
 
         # test if the Adj Close collumn was backward propagated
         expected_adj_close = web_reader(ticker, self.YahooSource)[:end]["Adj Close"]

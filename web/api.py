@@ -99,6 +99,8 @@ class DataReader(object):
         :param end: then end date of the time series range
         :return: a data frame containing the market data
         """
+        source = "google" if source == "google-realtime" else source
+
         if not self.enable_cache:
             return self._fetch_web_data(ticker, source, start=start, end=end)
 
@@ -142,12 +144,18 @@ class DataReader(object):
         if ref_df is None:
             return raw_df
 
+        # Update the reference data with the data of the source before the
+        # current start of the reference
         ref_start = str(ref_df.index[0].date())
         ref_df = ref_df.combine_first(raw_df.loc[:ref_start])
 
         ref_end = str(ref_df.index[-1].date())
+        # Backward propagate Adj Close: the priority is given to the raw data
         ref_df["Adj Close"] =\
             raw_df.combine_first(ref_df).loc[:ref_end]["Adj Close"]
+
+        # Update the reference data with the data of the source after the
+        # current end of the reference.
         return ref_df.combine_first(raw_df.loc[ref_end:])
 
     def _update_with_live_quote(self, ticker, df):
@@ -172,15 +180,14 @@ class DataReader(object):
         end = end or today
 
         raw_df = self._read_raw_data(ticker, source, start=self.origin, end=end)
+        if end == today and source == "google-realtime":
+            self._update_with_live_quote(ticker, raw_df)
         self._save_raw_data(ticker, source, raw_df)
         df = raw_df
 
         if self.use_reference:
             ref_df = self._read_cache(ticker, "reference")
             df = self._combine_ref_and_raw_data(ref_df, raw_df)
-
-        if end == today:
-            self._update_with_live_quote(ticker, df)
 
         self._save_raw_data(ticker, "reference", df)
 
