@@ -235,7 +235,7 @@ class DataReader(object):
                                                 self.origin, end)
         for source, raw_df in dfs.items():
             self._save_raw_data(ticker, source, raw_df)
-        ref_df = aggregation_strategy(dfs.values())
+        ref_df = aggregation_strategy(list(dfs.values()))
         self._save_raw_data(ticker, self.ReferenceSource, ref_df)
         return ref_df
 
