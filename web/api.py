@@ -109,7 +109,7 @@ class DataReader(object):
             return self._fetch_web_data(ticker, source, start=start, end=end)
 
         cache_df = self._read_cache(ticker, source)
-        if cache_df is None:
+        if cache_df is None or len(cache_df) == 0:
             return self._fetch_web_data(ticker, source, start=start, end=end)
 
         cache_end = str(cache_df.index[-1].date())
