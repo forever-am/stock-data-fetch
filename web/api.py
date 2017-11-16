@@ -146,6 +146,8 @@ class DataReader(object):
         ref_df = ref_df.combine_first(raw_df.loc[:ref_start])
 
         ref_end = str(ref_df.index[-1].date())
+        ref_df["Adj Close"] =\
+            raw_df.combine_first(ref_df).loc[:ref_end]["Adj Close"]
         return ref_df.combine_first(raw_df.loc[ref_end:])
 
     def _update_with_live_quote(self, ticker, df):

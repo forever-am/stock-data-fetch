@@ -40,6 +40,7 @@ def test_mkdir_if_not_exist(m_mkdir):
 
 
 class DataReaderTest(TestCase):
+    StaticColumns = ["Open", "High", "Low", "Close"]
     GoogleTicker = "GOOG"
     YahooSource = "yahoo"
     GoogleSource = "google"
@@ -187,11 +188,20 @@ class DataReaderTest(TestCase):
         )
         start_ref_g = str(df_ref_g.index[0].date())
         end_ref_g = str(df_ref_g.index[-1].date())
-        pdt.assert_frame_equal(df_ref_y.loc[start_ref_g:end_ref_g],
-                               df_ref_g)
+        sub_df_ref_y = df_ref_y.loc[start_ref_g:end_ref_g][self.StaticColumns]
 
+        sub_df_ref_g = df_ref_g[self.StaticColumns]
+        pdt.assert_frame_equal(sub_df_ref_g, sub_df_ref_y)
+
+        # test if the static columns of the reference are correctly completed
+        # with the columns of yahoo source
         expected = web_reader(ticker, "googleyahoo")[:end]
-        pdt.assert_frame_equal(df_ref_y, expected)
+        pdt.assert_frame_equal(df_ref_y[self.StaticColumns],
+                               expected[self.StaticColumns])
+
+        # test if the Adj Close collumn was backward propagated
+        expected_adj_close = web_reader(ticker, self.YahooSource)[:end]["Adj Close"]
+        pdt.assert_series_equal(df_ref_y["Adj Close"], expected_adj_close)
         rmtree(self.stock_data_dir)
 
     @classmethod
