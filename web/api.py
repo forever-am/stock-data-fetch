@@ -233,7 +233,7 @@ class DataReader(object):
 
         dfs = self._read_raw_data_multi_sources(ticker, sources,
                                                 self.origin, end)
-        for source, raw_df in dfs.iteritems():
+        for source, raw_df in dfs.items():
             self._save_raw_data(ticker, source, raw_df)
         ref_df = aggregation_strategy(dfs.values())
         self._save_raw_data(ticker, self.ReferenceSource, ref_df)
