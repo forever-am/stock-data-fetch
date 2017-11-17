@@ -11,9 +11,19 @@ from .aggregation_strategies import average_strategy
 HOME_DIR = path.expanduser("~")
 
 def _today():
+    """
+    Get the today's date
+    :return:
+    """
     return datetime.now().date()
 
 def _market_data_filename(source, ticker):
+    """
+    Compute the filname of data to be cached for a given source, ticker
+    :param source: the source of the data
+    :param ticker: the instrument ticker
+    :return: the name of the data file
+    """
     if source == "reference":
         return ticker + ".csv"
     else:
@@ -107,10 +117,7 @@ class DataReader(object):
 
         cache_df = self._read_cache(ticker, source)
         if cache_df is None or len(cache_df) == 0:
-            web_df_2 = self._fetch_web_data(ticker, source, start=start, end=end)
-            print(ticker, source, start, end)
-            print(web_df_2[["Open", "Close"]].ix[0:10])
-            return web_df_2
+            return self._fetch_web_data(ticker, source, start=start, end=end)
 
         cache_end = str(cache_df.index[-1].date())
         if cache_end > end:
@@ -118,8 +125,6 @@ class DataReader(object):
 
         web_df = self._fetch_web_data(ticker, source, start=str(cache_end),
                                       end=end)
-        print(ticker, source, start, end)
-        print(web_df[["Open", "Close"]].ix[0:10])
         return web_df.combine_first(cache_df)
 
     def _read_raw_data_multi_sources(self, ticker, sources, start, end):
@@ -131,7 +136,8 @@ class DataReader(object):
         :param end: then end date of the time series range
         :return: a dictionary under format source: dataframe
         """
-        return {source: self._read_raw_data(ticker, source, start, end) for source in sources}
+        return {source: self._read_raw_data(ticker, source, start, end)
+                for source in sources}
 
     def _save_raw_data(self, ticker, source, df):
         """
@@ -226,7 +232,8 @@ class DataReader(object):
         :param source: the source vendor of market data
         :param start: then begin date of the time series range
         :param end: then end date of the time series range
-        :param aggregation_strategy: a function which aggregate a list of df into one df
+        :param aggregation_strategy: a function which aggregate a list of dfs
+               into one quality improved df
         :return: the aggregated reference
         """
         today = str(_today())
@@ -249,6 +256,18 @@ class DataReader(object):
 
 def data_reader(ticker, source="yahoo", end=None,
                 enable_cache=True, use_reference=True):
+    """
+    API to fetch source or reference data from the cache and/or the web when
+    needed with the ability to fetch every sources and aggregate them into the
+    reference
+    :param ticker: the instrument ticker
+    :param source: the source vendor of market data
+    :param end: then end date of the time series range
+    :param enable_cache: enable caching the data retrieved and computed (ref)
+    :param use_reference: prefer to use data of the reference when available
+    within the cache. (cache need to be enabled)
+    :return: the requested data frame
+    """
     reader = DataReader(enable_cache=enable_cache, use_reference=use_reference)
     if source == "all":
         return reader.read_multi_sources(ticker, end=end)

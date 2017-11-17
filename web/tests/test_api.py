@@ -226,6 +226,9 @@ class DataReaderTest(TestCase):
         expected = web_reader(ticker, "reference")
         pdt.assert_frame_equal(df_ref, expected)
 
+        pdt.assert_frame_equal(df_ref[self.StableColumns].dropna(),
+                               df_ref[self.StableColumns])
+
     @classmethod
     def tearDownClass(cls):
         if path.exists(cls.stock_data_dir):

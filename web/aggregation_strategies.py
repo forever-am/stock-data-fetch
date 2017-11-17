@@ -15,13 +15,22 @@ def average_strategy(dfs):
     """
     if len(dfs) == 0:
         return None
-
+    # numerator dataframe
     df_num = pd.DataFrame(index=dfs[0].index)
+    # denominator dataframe
     df_denom = pd.DataFrame(index=dfs[0].index)
     for df in dfs:
+        # mask to be added to the denominator. 0 if NaN, 1 if not
         df_mask = df.isnull().transform(
             lambda col: col.apply(lambda x: 0 if x else 1))
+
+        # the numerator is the sum of the dataframes - filling in the NaN with 0
         df_num = df_num.append(df.fillna(0))
+
+        # the denominator should be the number of non-NaN values for a couple
+        # (date, column)
         df_denom = df_denom.append(df_mask)
 
+    # the calculte the average
+    # Note that a NaN could appear here if we get 0/0.
     return df_num.groupby("Date").sum()/df_denom.groupby("Date").sum()
