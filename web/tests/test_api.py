@@ -52,7 +52,6 @@ class DataReaderTest(TestCase):
     GoogleRealtimeSource = "google-realtime"
     QuandlSource = "quandl"
     AllSources = "all"
-    GoogleRealtimeSource = "google-realtime"
 
     stock_data_dir = path.join(TEST_DIR, "stock-data")
 
