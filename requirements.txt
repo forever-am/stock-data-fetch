@@ -1,6 +1,9 @@
 pandas_datareader==0.5.0
 pandas
-pep8
 nose
+coverage
 mock
 jupyter
+pep8
+radon
+coverage

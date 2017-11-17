@@ -16,6 +16,14 @@ it supports both Python 2 and 3. Feel free to create an issue if you have any qu
 nosetests . --with-coverage --cover-package=. --cover-html --cover-erase
 ```
 
+- [radon](http://radon.readthedocs.io/en/latest/commandline.html) is a useful tool to check if the code
+can be easily maintained. It is recommended to keep the cyclomatic complexity of each function under 6.
+You can check if you have any function passing this threshold with
+```bash
+radon cc . --min B -s
+```
+`radon cc .` shows the metric of all the code.
+
 ### Features
 
 - Implements pandas_datareader API enabling a cache by data source and for the reference 
