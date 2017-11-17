@@ -23,15 +23,8 @@ def mkdir_if_not_exist(dir_path):
     if not path.exists(dir_path):
         mkdir(dir_path)
 
-# def _merge_values(default_value, value):
-#    return value if math.isnan(default_value) else default_value
-
-# def _merge_series(serie_a, serie_b):
-#    def merge_values(value):
-#        return _merge_values(value, )
-#    return serie_a.apply()
-
 class DataReader(object):
+    StableColumns = ["Open", "High", "Low", "Close", "Volume"]
     OpenCol = "Open"
     CloseCol = "Close"
     AdjCloseCol = "Adj Close"
@@ -42,6 +35,10 @@ class DataReader(object):
     origin = "1926-01-01"
     Sources = ["yahoo", "google-realtime", "quandl"]
     ReferenceSource = "reference"
+    GoogleSource = "google"
+    GoogleRealtimeSource = "google-realtime"
+    YahooSource = "yahoo"
+    QuandlSource = "quandl"
 
     def __init__(self, cache_dir=None, enable_cache=True, use_reference=True):
         """
@@ -80,6 +77,8 @@ class DataReader(object):
         :return: a data frame containing the web normalized market data
         """
         web_df = web.DataReader(ticker, source, start=start, end=end)
+        web_df = web_df.sort_index()
+
         web_df[self.OpenCol] = web_df[self.OpenCol].astype(np.float64)
         web_df[self.CloseCol] = web_df[self.CloseCol].astype(np.float64)
         web_df[self.HighCol] = web_df[self.HighCol].astype(np.float64)
@@ -88,10 +87,8 @@ class DataReader(object):
         if self.AdjCloseCol in web_df.columns:
             web_df[self.AdjCloseCol] =\
                 web_df[self.AdjCloseCol].astype(np.float64)
-        else:
-            web_df[self.AdjCloseCol] = web_df[self.CloseCol]
-        return web_df[[self.OpenCol, self.HighCol, self.LowCol, self.CloseCol,
-                       self.AdjCloseCol, self.VolumeCol]].loc[:end]
+
+        return web_df.loc[:end]
 
     def _read_raw_data(self, ticker, source, start, end):
         """
@@ -110,7 +107,10 @@ class DataReader(object):
 
         cache_df = self._read_cache(ticker, source)
         if cache_df is None or len(cache_df) == 0:
-            return self._fetch_web_data(ticker, source, start=start, end=end)
+            web_df_2 = self._fetch_web_data(ticker, source, start=start, end=end)
+            print(ticker, source, start, end)
+            print(web_df_2[["Open", "Close"]].ix[0:10])
+            return web_df_2
 
         cache_end = str(cache_df.index[-1].date())
         if cache_end > end:
@@ -118,6 +118,8 @@ class DataReader(object):
 
         web_df = self._fetch_web_data(ticker, source, start=str(cache_end),
                                       end=end)
+        print(ticker, source, start, end)
+        print(web_df[["Open", "Close"]].ix[0:10])
         return web_df.combine_first(cache_df)
 
     def _read_raw_data_multi_sources(self, ticker, sources, start, end):
@@ -129,8 +131,7 @@ class DataReader(object):
         :param end: then end date of the time series range
         :return: a dictionary under format source: dataframe
         """
-        return {source: self._read_raw_data(ticker, source, start, end)
-               for source in sources}
+        return {source: self._read_raw_data(ticker, source, start, end) for source in sources}
 
     def _save_raw_data(self, ticker, source, df):
         """
@@ -233,9 +234,15 @@ class DataReader(object):
 
         dfs = self._read_raw_data_multi_sources(ticker, sources,
                                                 self.origin, end)
+        # save the raw data of each sources
         for source, raw_df in dfs.items():
             self._save_raw_data(ticker, source, raw_df)
+
         ref_df = aggregation_strategy(list(dfs.values()))
+
+        # drop rows if they contain NaN within the stable columns
+        ref_df = ref_df.loc[ref_df[self.StableColumns].dropna().index]
+
         self._save_raw_data(ticker, self.ReferenceSource, ref_df)
         return ref_df
 

@@ -40,11 +40,13 @@ def test_mkdir_if_not_exist(m_mkdir):
 
 
 class DataReaderTest(TestCase):
-    StableColumns = ["Open", "High", "Low", "Close"]
+    StableColumns = ["Open", "High", "Low", "Close", "Volume"]
 
+    # The tickers used for the tests
     GoogleTicker = "GOOG"
     AppleTicker = "AAPL"
 
+    # The available sources
     YahooSource = "yahoo"
     GoogleSource = "google"
     GoogleRealtimeSource = "google-realtime"
@@ -212,7 +214,12 @@ class DataReaderTest(TestCase):
         pdt.assert_series_equal(df_ref_y["Adj Close"], expected_adj_close)
         rmtree(self.stock_data_dir)
 
-    def test_data_reader_all(self):
+    def test_data_reader_all_with_average_strategy(self):
+        """
+        Test if the read all compute the excepted values with the average
+        strategy between the sources
+        :return:
+        """
         ticker = self.AppleTicker
         df_ref = api.data_reader(ticker, source=self.AllSources)
         end = "2017-11-02"
